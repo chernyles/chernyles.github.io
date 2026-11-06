@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<title>흑림 Чёрный лес</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="크라스니 마야크 내부 방송 — 흑림 세계관 자료">
+<meta property="og:title" content="흑림 Чёрный лес">
+<meta property="og:description" content="크라스니 마야크 내부 방송 — 흑림 세계관 자료">
+<meta property="og:image" content="https://chernyles.github.io/thumb.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one CRT television in a dark room; a slim control column of channel keys; each channel is one screen. */
+:root{
+  --room:#121110;
+  --room-2:#1a1816;
+  --cab:#2c2622;
+  --cab-hi:#3a332d;
+  --bezel:#0f0d0b;
+  --glass:#07100c;
+  --phos:#d3e8da;
+  --phos-dim:#8aa699;
+  --phos-hot:#f3fff7;
+  --alert:#ff6a4d;
+  --key:#1d1a17;
+  --key-hi:#2a2622;
+  --label:#a39a8c;
+  --led:#ffb347;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono","IBM Plex Sans KR",ui-monospace,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{
+  background:radial-gradient(ellipse at 50% 30%,var(--room-2),var(--room) 70%);
+  background-color:var(--room);color:var(--phos);font-family:var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:28px 40px;min-height:100%;box-sizing:border-box;
+}
+.room{max-width:1000px;margin:0 auto;display:grid;gap:14px}
+.tv{
+  display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:20px;
+  background:linear-gradient(165deg,var(--cab-hi),var(--cab) 45%);
+  border-radius:22px;padding:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 30px 60px rgba(0,0,0,.6),0 0 120px rgba(160,210,180,.05);
+}
+.bezel{background:var(--bezel);border-radius:30px;padding:14px;box-shadow:inset 0 2px 10px #000}
+.screen{
+  position:relative;aspect-ratio:4/3;border-radius:40px/34px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 45%,#13221b 0%,var(--glass) 75%);
+  box-shadow:inset 0 0 70px rgba(0,0,0,.9),inset 0 0 18px rgba(160,230,190,.08);isolation:isolate;
+}
+.screen::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.screen::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 28% 18%,rgba(255,255,255,.06),transparent 40%),radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(0,0,0,.5) 100%)}
+.osd{position:absolute;z-index:2;top:5.5%;right:7%;font-family:var(--f-mono);font-weight:500;font-size:clamp(18px,2.6vw,26px);color:#7dff9a;text-shadow:0 0 8px rgba(125,255,154,.6)}
+.osd-l{position:absolute;z-index:2;top:6.6%;left:7%;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--phos-dim)}
+canvas.noise{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;opacity:0;mix-blend-mode:screen}
+canvas.noise.on{opacity:.85}
+.ch{position:absolute;inset:0;z-index:1;overflow-y:auto;padding:13% 8% 8%;text-shadow:0 0 5px rgba(190,240,210,.28);scrollbar-width:thin;scrollbar-color:var(--phos-dim) transparent}
+.kicker{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.18em;color:var(--phos-dim);margin:0 0 8px}
+.label{font-size:12.5px;letter-spacing:.04em;color:var(--phos-dim);margin:0 0 6px}
+.ch h2{font-size:clamp(22px,3.2vw,30px);font-weight:700;margin:0 0 14px;line-height:1.3;color:var(--phos-hot);text-wrap:balance;letter-spacing:-.01em}
+.ch p{font-size:clamp(14px,1.6vw,15.5px);line-height:1.75;margin:0 0 10px;max-width:38em}
+.ch ul{list-style:none;padding:0;margin:0 0 10px}
+.ch li{position:relative;padding-left:1.1em;font-size:clamp(13.5px,1.55vw,15px);line-height:1.7;margin-bottom:5px}
+.ch li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--phos-dim)}
+.ru{font-family:var(--f-mono);font-size:.84em;color:var(--phos-dim)}
+b{color:var(--phos-hot);font-weight:600}
+.alert{color:var(--alert);text-shadow:0 0 8px rgba(255,106,77,.45)}
+.card0{display:grid;align-content:center;min-height:100%;text-align:center;gap:6px}
+.card0 .big{font-size:clamp(56px,11vw,108px);font-weight:700;line-height:1;color:var(--phos-hot);letter-spacing:-.03em;text-shadow:0 0 18px rgba(200,255,220,.4)}
+.card0 .sub{font-family:var(--f-mono);letter-spacing:.42em;color:var(--phos-dim);font-size:clamp(11px,1.4vw,14px)}
+.card0 .bar{margin:16px auto 4px;padding:5px 14px;border:1px solid var(--alert);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.18em;width:max-content;max-width:100%}
+.card0 p{margin:6px auto;max-width:28em}
+.crawl{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(211,232,218,.2);margin-top:14px;padding-top:8px;font-size:12.5px;color:var(--phos-dim)}
+.crawl span{display:inline-block;padding-left:100%;animation:crawl 24s linear infinite}
+@keyframes crawl{to{transform:translateX(-100%)}}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:6px 0 10px}
+.cell{border:1px solid rgba(211,232,218,.18);padding:9px 11px;min-width:0;background:rgba(211,232,218,.025)}
+.cell .k{font-family:var(--f-mono);font-size:11.5px;color:var(--phos-dim);letter-spacing:.04em}
+.cell .v{font-size:14px;line-height:1.55;margin-top:3px}
+.cell.hot{border-color:rgba(255,106,77,.6)}
+.zone{display:grid;grid-template-columns:4.6em minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;font-size:14px;padding:6px 0;border-bottom:1px solid rgba(211,232,218,.12)}
+.zone .n{color:var(--phos-dim);font-size:13px;font-variant-numeric:tabular-nums}
+.zone .s{font-size:12.5px;white-space:nowrap}
+.s.ok{color:#7dff9a}.s.go{color:var(--alert)}.s.no{color:var(--phos-dim)}
+.quote{margin:14px 0;padding:10px 14px;border-left:2px solid var(--phos);font-size:14.5px;line-height:1.7;color:var(--phos-hot)}
+.meter{display:flex;gap:4px;margin:4px 0 10px;max-width:360px}
+.meter i{flex:1;height:12px;border:1px solid var(--phos-dim)}
+.meter i.on{background:var(--phos);box-shadow:0 0 8px rgba(211,232,218,.5)}
+dl.gl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0;font-size:14px}
+dl.gl dt{font-family:var(--f-mono);color:var(--phos-hot)}
+dl.gl dt small{font-family:var(--f-body);color:var(--phos-dim);font-size:12px;margin-left:8px}
+dl.gl dd{margin:0}
+ol.rules{list-style:none;padding:0;margin:0;counter-reset:r}
+ol.rules li{counter-increment:r;padding-left:2.2em}
+ol.rules li::before{content:counter(r,decimal-leading-zero);background:none;width:auto;height:auto;top:.08em;font-family:var(--f-mono);color:var(--alert);font-size:12.5px}
+
+/* control column */
+.panel{display:flex;flex-direction:column;gap:12px}
+.brand{font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;color:var(--label);text-align:center;padding:6px 0 4px;border-bottom:1px solid rgba(255,255,255,.06)}
+.keys{display:grid;gap:6px}
+.key,.snd{
+  appearance:none;border:0;cursor:pointer;width:100%;
+  display:grid;grid-template-columns:8px 1.6em 1fr;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:8px;text-align:left;
+  background:linear-gradient(180deg,var(--key-hi),var(--key));
+  color:var(--label);font-family:var(--f-body);font-size:13px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 2px 0 rgba(0,0,0,.55);
+  transition:transform 90ms cubic-bezier(.2,.8,.2,1),box-shadow 90ms,color .15s,background .15s;
+}
+.key .n,.snd .n{font-family:var(--f-mono);font-size:12px;color:#6f675c}
+.key .dot,.snd .dot{width:6px;height:6px;border-radius:50%;background:#3a342e}
+.key:hover,.snd:hover{color:#d9d0c2;transform:translateY(-1px)}
+.key:active,.snd:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.key[aria-pressed="true"],.snd[aria-pressed="true"]{color:var(--phos-hot);background:linear-gradient(180deg,#171513,#121110);box-shadow:inset 0 2px 5px rgba(0,0,0,.7)}
+.key[aria-pressed="true"] .dot,.snd[aria-pressed="true"] .dot{background:var(--led);box-shadow:0 0 8px var(--led)}
+.key[aria-pressed="true"] .n{color:var(--led)}
+.key:focus-visible,.snd:focus-visible{outline:2px solid #7dff9a;outline-offset:2px}
+.snd{margin-top:auto}
+.power{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;color:var(--label)}
+.led{width:7px;height:7px;border-radius:50%;background:#ff4b2b;box-shadow:0 0 8px #ff4b2b}
+.hint{font-size:12px;color:#7d7468;text-align:center}
+.credit{font-size:11px;line-height:1.6;color:#6b6358;text-align:center;max-width:46em;margin:0 auto}
+@media (max-width:760px){
+  .tv{grid-template-columns:1fr;padding:12px;border-radius:18px}
+  .bezel{padding:9px;border-radius:24px}
+  .screen{aspect-ratio:auto;height:min(68vh,580px);border-radius:26px/22px}
+  .ch{padding:54px 20px 22px}
+  .osd-l,.brand{display:none}
+  .keys{grid-template-columns:repeat(3,1fr)}
+  .key{grid-template-columns:6px 1fr;gap:6px;padding:9px 8px;font-size:12.5px}
+  .key .n{display:none}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){.crawl span{animation:none;padding-left:0}.key,.snd{transition:none}}
+</style>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="room">
+  <div class="tv">
+    <div class="bezel">
+      <div class="screen" id="screen">
+        <div class="osd-l">КМ-ТВ · ВНУТРЕННЕЕ ВЕЩАНИЕ</div>
+        <div class="osd" id="osd">00</div>
+        <canvas class="noise" id="noise" width="160" height="120" aria-hidden="true"></canvas>
+        <section class="ch" id="ch-0" aria-label="채널 0 · 방송 시작">
+          <div class="card0">
+            <div class="sub">ЧЁРНЫЙ ЛЕС</div>
+            <div class="big">흑림</div>
+            <div class="bar alert">ЭКСТРЕННОЕ СООБЩЕНИЕ</div>
+            <p>정규 방송을 중단하고 알려 드립니다.<br>크라스니 마야크 주둔 인원은 채널 버튼을 눌러 작전 지역 자료를 확인하십시오.</p>
+            <div class="crawl"><span>♪ П. И. Чайковский — «Лебединое озеро» · 새벽 방송 종료 후에도 이 채널에서는 백조의 호수가 흘러나온다 · 수신 상태: 양호 · 1999.11.01 · Маяк</span></div>
+          </div>
+        </section>
+
+        <section class="ch" id="ch-1" aria-label="채널 1 · 개요" hidden>
+          <p class="kicker">CH 01 · ОБЩИЕ СВЕДЕНИЯ</p>
+          <h2>1991년 12월 26일, 소련이 사라진 밤</h2>
+          <p>크라스노야르스크 지방 오지에 정체불명의 물체가 떨어졌다. 그 뒤로 낙하 지점을 중심으로 숲이 퍼지고 있다. 위성 사진으로 보면 검은 얼룩일 뿐이라 병사들은 이 숲을 <b>흑림</b><span class="ru"> Чёрный лес</span>이라 부른다.</p>
+          <ul>
+            <li>숲은 해마다 수 km씩 넓어진다. 이대로라면 15년 안에 시베리아 횡단 철도에 닿는다.</li>
+            <li>숲은 그 자리에 있던 것을 지우지 않고 삼킨다. 마을, 공장, 철도역, 군 기지가 전부 숲 안에 남아 있다.</li>
+            <li>공식 발표는 「산업 사고로 인한 화학 오염 구역」. 가족에게 보내는 편지에는 「산림 작업」이라고만 쓴다.</li>
+          </ul>
+          <h2 style="margin-top:22px">자레치니를 확보하라</h2>
+          <p>제3구역 자레치니의 학교와 병원을 확보하고 시내에 거점을 설치한다. 모스크바가 정한 기한은 <b class="alert">2000년 새해 전</b>.</p>
+          <p class="label" style="margin-top:14px">원정 진척도 · 12%</p>
+          <div class="meter" role="img" aria-label="원정 진척도 12퍼센트"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <ul>
+            <li>진척도는 거점이 버티거나, 구역 목표를 달성하거나, 회수품이 본부에 도착할 때만 오른다.</li>
+            <li>모스크바에서 내려온 감찰관이 앵커 일지를 검열한다. 기억 손실이 기준치를 넘은 감응자는 별도 조치 대상이 된다.</li>
+          </ul>
+        </section>
+
+        <section class="ch" id="ch-2" aria-label="채널 2 · 흑림" hidden>
+          <p class="kicker">CH 02 · ВНУТРИ</p>
+          <h2>경계를 넘으면 소리가 먼저 사라진다</h2>
+          <p>숲의 경계선 <b>루베시</b><span class="ru"> Рубеж</span>는 철조망과 검문소로 봉쇄되어 있다. 안쪽은 낮에도 황혼처럼 어둡고, 나침반과 지도와 무전이 듣지 않는다. 지형은 하룻밤 사이에 바뀌고, 숲 안의 사흘이 밖에서는 열하루가 되기도 한다.</p>
+          <div class="zone"><span class="n">제1구역</span><span>오푸시카 · 숲에 삼켜진 마을</span><span class="s ok">확보</span></div>
+          <div class="zone"><span class="n">제2구역</span><span>데포 · 멈춘 열차와 차량기지</span><span class="s ok">확보</span></div>
+          <div class="zone"><span class="n">제3구역</span><span>자레치니 · 학교, 병원, 아파트</span><span class="s go">작전 중</span></div>
+          <div class="zone"><span class="n">제4구역</span><span>콤비나트 「붉은 10월」</span><span class="s no">미확보</span></div>
+          <div class="zone"><span class="n">제5구역</span><span>오스트로프-7 · 1991년 주둔지</span><span class="s no">미확보</span></div>
+          <div class="zone"><span class="n">제6구역</span><span>고요한 호수</span><span class="s no">미확인</span></div>
+          <div class="zone"><span class="n">중심부</span><span>보론카 · 낙하 지점</span><span class="s no">귀환자 없음</span></div>
+        </section>
+
+        <section class="ch" id="ch-3" aria-label="채널 3 · 감응자" hidden>
+          <p class="kicker">CH 03 · ЧУВСТВИТЕЛЬНЫЕ И ЯКОРЯ</p>
+          <h2>잊는 사람과 기억하는 사람</h2>
+          <ul>
+            <li>흑림에 오래 노출된 사람 중 일부는 능력을 얻는다. 군은 <b>감응자</b>라 부르고, 병사들은 「레스니예」<span class="ru"> Лесные</span>, 숲의 것들이라 부른다.</li>
+            <li>능력을 쓸 때마다 기억이 숲에 먹힌다. 처음엔 사소한 것, 그다음은 고향과 가족의 얼굴.</li>
+            <li>마지막에 무언가를 잊으면 숲에 먹힌다. 사람이었던 것은 나무껍질 같은 괴물, <b>레쉬</b><span class="ru"> Леший</span>가 된다.</li>
+            <li>그것을 막는 사람이 <b>앵커</b><span class="ru"> Якорь</span>다. 잊은 것을 대신 기록하고, 다시 들려주고, 이름을 불러 준다.</li>
+            <li>감응자와 앵커는 2인 1조 <b>쌍</b><span class="ru"> Пара</span>으로 움직인다. 숲 안에서 쌍은 흩어지지 않는다.</li>
+          </ul>
+          <div class="quote">작전이 끝나면 앵커는 묻는다.<br>"이름. 계급. 오늘 아침에 뭘 먹었는지."</div>
+        </section>
+
+        <section class="ch" id="ch-4" aria-label="채널 4 · 능력" hidden>
+          <p class="kicker">CH 04 · КЛАССИФИКАЦИЯ</p>
+          <h2>계열과 등급</h2>
+          <div class="grid2">
+            <div class="cell"><div class="k">М · Материя</div><div class="v">물질. 금속, 나무, 돌, 얼음을 휘고 빚고 부순다.</div></div>
+            <div class="cell"><div class="k">Ч · Чутьё</div><div class="v">감각. 벽 너머, 길의 결, 사람이 얼마나 아직 사람인지.</div></div>
+            <div class="cell"><div class="k">Т · Тело</div><div class="v">신체. 지구력, 회복, 괴력. 잠식이 가장 빠르다.</div></div>
+            <div class="cell"><div class="k">Тш · Тишина</div><div class="v">침묵. 소리, 빛, 이상 현상, 다른 능력을 억누른다.</div></div>
+            <div class="cell"><div class="k">П · Пространство</div><div class="v">공간. 희귀. 지름길을 내고 거리를 접는다.</div></div>
+            <div class="cell"><div class="k">К · Корни</div><div class="v">뿌리. 가장 희귀. 식물과 뿌리를 다룬다.</div></div>
+            <div class="cell"><div class="k">Х · Неизвестное</div><div class="v">미분류. 어느 계열에도 속하지 않는 능력.</div></div>
+          </div>
+          <div class="grid2">
+            <div class="cell"><div class="k">I등급</div><div class="v">효과가 작고 국소적이다.</div></div>
+            <div class="cell"><div class="k">II등급</div><div class="v">작전에 실질적으로 쓰인다.</div></div>
+            <div class="cell"><div class="k">III등급</div><div class="v">전투의 흐름을 바꾼다. 모스크바 등록.</div></div>
+            <div class="cell hot"><div class="k">IV등급</div><div class="v">극소수. 모스크바 직접 관리.</div></div>
+          </div>
+          <p>능력은 숲 깊은 곳에서 가장 강하고, 크라스니 마야크에서는 거의 쓸 수 없다. 어떤 능력도 먹힌 기억을 되돌리지 못한다.</p>
+        </section>
+
+        <section class="ch" id="ch-5" aria-label="채널 5 · 여단" hidden>
+          <p class="kicker">CH 05 · 14-Я ОБрСпН «СНЕГИРИ»</p>
+          <h2>제14독립특수임무여단 「스네기리」</h2>
+          <p>본부는 루베시에서 40km 떨어진 폐쇄도시 <b>크라스니 마야크</b><span class="ru"> Красный Маяк</span>. 도시 한가운데 옛 관측탑의 붉은 등이 매시 정각에 한 번 깜빡인다. 무전 호출부호는 <span class="ru">«Маяк»</span>.</p>
+          <p>독립 쌍 대대의 분대는 시베리아 겨울새의 이름을 쓴다.</p>
+          <div class="grid2">
+            <div class="cell hot"><div class="k">1 · Снегирь</div><div class="v">스네기르. 자레치니 돌격 분대. 4번 쌍 <span class="ru">«Снегирь-4»</span>: 드미트리 소콜로프 하사, 그리고 당신.</div></div>
+            <div class="cell"><div class="k">2 · Клёст</div><div class="v">클료스트. 철도 노선과 보급.</div></div>
+            <div class="cell"><div class="k">3 · Синица</div><div class="v">시니차. 제1구역 신병 훈련.</div></div>
+            <div class="cell"><div class="k">4 · Свиристель</div><div class="v">스비리스텔. 모스크바 지시 회수 임무.</div></div>
+            <div class="cell"><div class="k">5 · Щур</div><div class="v">슈르. 실종 쌍 수색, 군번줄 판독.</div></div>
+          </div>
+        </section>
+
+        <section class="ch" id="ch-6" aria-label="채널 6 · 레쉬" hidden>
+          <p class="kicker">CH 06 · ЛЕШИЙ</p>
+          <h2>숲에 먹힌 사람들</h2>
+          <p>레쉬는 말을 하지 않고 목소리를 흉내 내지도 않는다. 피부는 나무껍질처럼 굳었고 손발은 뿌리가 되어 폐허와 엉켜 있다. 그 주변에서는 길이 더 심하게 뒤틀린다. 많은 레쉬가 사람이었을 때의 버릇 하나를 되풀이한다. 경례, 소매를 잡아당기는 손짓, 같은 걸음.</p>
+          <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+            <div class="cell"><div class="k">Стоячие · 서 있는 것</div><div class="v">가장 흔하다. 쓰러진 자리에 뿌리내린 채 서 있다. 거리를 두면 해롭지 않지만 주변 길이 크게 뒤틀린다.</div></div>
+            <div class="cell"><div class="k">Ходоки · 걷는 것</div><div class="v">아무도 보지 않을 때만 움직인다. 돌아볼 때마다 조금씩 가까워져 있다. 쌍은 등을 맞대고 지나간다.</div></div>
+            <div class="cell"><div class="k">Гнёзда · 둥지</div><div class="v">여러 레쉬가 건물 하나와 엉겨 붙은 것. 건물 자체가 고리가 된다. 절대 들어가지 않는다.</div></div>
+            <div class="cell hot"><div class="k">Пастухи · 목자</div><div class="v">드물다. 키가 크고 장교 외투의 잔해를 걸쳤다. 다른 레쉬들이 그쪽으로 몸을 돌린다. 목격 즉시 철수.</div></div>
+          </div>
+          <ul>
+            <li>대부분 사람의 흔적을 하나씩 지니고 있다. 군번줄, 안경, 결혼반지, 학교 배지.</li>
+            <li>군번줄을 판독해 이름을 기록하면 그 병사의 실종 처리가 종결된다. 이 일은 주로 슈르 분대가 맡는다.</li>
+            <li>모든 레쉬는 중심부를 향해 서 있다.</li>
+          </ul>
+        </section>
+
+        <section class="ch" id="ch-7" aria-label="채널 7 · 기지" hidden>
+          <p class="kicker">CH 07 · КРАСНЫЙ МАЯК</p>
+          <h2>지도에 없는 도시</h2>
+          <p>여단 장병과 가족, 민간 직원이 사는 폐쇄도시. 숲이 차갑고 좁다면, 이곳은 시끄럽고 따뜻하다.</p>
+          <div class="grid2">
+            <div class="cell"><div class="k">Казарма · 막사</div><div class="v">백열등 하나, 철제 침대, 밤마다 꾸르륵 우는 라디에이터.</div></div>
+            <div class="cell"><div class="k">Столовая · 식당</div><div class="v">메밀죽, 보르시, 콤포트. 소문이 명령보다 빨리 돈다.</div></div>
+            <div class="cell"><div class="k">Баня · 바냐</div><div class="v">토요일. 자작나무 가지와 증기. 병사들이 마음 놓고 말하는 유일한 곳.</div></div>
+            <div class="cell"><div class="k">Клуб · 장교 클럽</div><div class="v">비디오 플레이어와 해적판 할리우드 테이프, 줄 하나 빠진 기타.</div></div>
+            <div class="cell"><div class="k">Почта · 우체국</div><div class="v">편지는 검열된다. 가족들은 「산림 작업」으로만 알고 있다.</div></div>
+            <div class="cell"><div class="k">Котельная · 보일러실 뒤</div><div class="v">암시장. 건전지, 담배, 청바지, 그리고 숲에서 나와서는 안 될 물건들.</div></div>
+          </div>
+          <p>통금은 23시. 관측탑 꼭대기의 붉은 등이 매시 정각에 한 번 깜빡이면, 주민들은 잠깐 말을 멈춘다.</p>
+        </section>
+
+        <section class="ch" id="ch-8" aria-label="채널 8 · 규칙·용어" hidden>
+          <p class="kicker">CH 08 · ПРАВИЛА И ГЛОССАРИЙ</p>
+          <h2>숲의 규칙</h2>
+          <ol class="rules">
+            <li>숲에서는 휘파람을 불지 않는다.</li>
+            <li>앵커의 암호가 아닌 목소리가 이름을 부르면 대답하지 않는다.</li>
+            <li>같은 길을 맴돌면 외투나 장갑을 뒤집어 입는다.</li>
+            <li>새 구역에 들어갈 때는 그루터기에 빵 한 조각을 둔다.</li>
+            <li>1991년에 멈춘 방에서는 아무것도 가지고 나오지 않는다.</li>
+            <li>「마지막」이라 말하지 않는다. 「끝자락」이라 한다.</li>
+            <li>작전 전에는 쌍이 함께 차를 마신다.</li>
+          </ol>
+          <h2 style="margin-top:22px">용어</h2>
+          <dl class="gl">
+            <dt>Чёрный лес<small>초르니 레스</small></dt><dd>흑림</dd>
+            <dt>Рубеж<small>루베시</small></dt><dd>경계선, 철조망과 검문소</dd>
+            <dt>Леший<small>레쉬</small></dt><dd>숲에 먹힌 사람이 변한 괴물</dd>
+            <dt>Лесные<small>레스니예</small></dt><dd>숲의 것들. 감응자를 부르는 속어</dd>
+            <dt>Якорь<small>야코리</small></dt><dd>앵커, 감응자의 기억을 지키는 사람</dd>
+            <dt>Пара<small>파라</small></dt><dd>쌍, 감응자와 앵커의 2인 1조</dd>
+            <dt>Красный Маяк<small>크라스니 마야크</small></dt><dd>붉은 등대, 여단 본부 폐쇄도시</dd>
+            <dt>Снегири<small>스네기리</small></dt><dd>멋쟁이새들, 여단 별칭</dd>
+            <dt>Маяк<small>마야크</small></dt><dd>본부 무전 호출부호</dd>
+          </dl>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="brand">СНЕГИРЬ-1</div>
+      <div class="keys" role="group" aria-label="채널 선택">
+        <button class="key" type="button" data-ch="0" aria-pressed="true"><span class="dot"></span><span class="n">00</span>방송</button>
+        <button class="key" type="button" data-ch="1" aria-pressed="false"><span class="dot"></span><span class="n">01</span>개요</button>
+        <button class="key" type="button" data-ch="2" aria-pressed="false"><span class="dot"></span><span class="n">02</span>흑림</button>
+        <button class="key" type="button" data-ch="3" aria-pressed="false"><span class="dot"></span><span class="n">03</span>감응자</button>
+        <button class="key" type="button" data-ch="4" aria-pressed="false"><span class="dot"></span><span class="n">04</span>능력</button>
+        <button class="key" type="button" data-ch="5" aria-pressed="false"><span class="dot"></span><span class="n">05</span>여단</button>
+        <button class="key" type="button" data-ch="6" aria-pressed="false"><span class="dot"></span><span class="n">06</span>레쉬</button>
+        <button class="key" type="button" data-ch="7" aria-pressed="false"><span class="dot"></span><span class="n">07</span>기지</button>
+        <button class="key" type="button" data-ch="8" aria-pressed="false"><span class="dot"></span><span class="n">08</span>규칙·용어</button>
+      </div>
+      <button class="snd" type="button" id="snd" aria-pressed="false"><span class="dot"></span><span class="n">♪</span><span id="sndt">BGM 켜기</span></button>
+      <div class="power"><span class="led"></span>СЕТЬ</div>
+    </div>
+  </div>
+  <div class="hint">채널 버튼이나 키보드 ← → 로 넘겨 보세요</div>
+  <div class="credit">BGM: 차이콥스키 「백조의 호수」 모음곡 중 정경 · 시드니 비어 지휘, 런던 내셔널 심포니 오케스트라 (Decca) · 퍼블릭 도메인 · Swiss Foundation Public Domain / Wikimedia Commons</div>
+</div>
+
+<script>
+(function(){
+  var N=9,cur=0,busy=false;
+  var osd=document.getElementById('osd');
+  var cv=document.getElementById('noise'),cx=cv.getContext('2d');
+  var keys=[].slice.call(document.querySelectorAll('.key'));
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function drawNoise(){
+    var img=cx.createImageData(cv.width,cv.height),d=img.data;
+    for(var i=0;i<d.length;i+=4){var v=Math.random()*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255;}
+    cx.putImageData(img,0,0);
+  }
+  function show(n){
+    for(var i=0;i<N;i++)document.getElementById('ch-'+i).hidden=(i!==n);
+    keys.forEach(function(k){k.setAttribute('aria-pressed',String(+k.dataset.ch===n));});
+    osd.textContent=(n<10?'0':'')+n;
+    document.getElementById('ch-'+n).scrollTop=0;
+    cur=n;
+    try{history.replaceState(null,'','#ch-'+n);}catch(e){}
+  }
+  function tune(n){
+    n=(n+N)%N;
+    if(n===cur||busy)return;
+    if(reduce){show(n);return;}
+    busy=true;cv.classList.add('on');
+    var t=0,iv=setInterval(function(){drawNoise();t++;if(t===3)show(n);if(t>5){clearInterval(iv);cv.classList.remove('on');busy=false;}},40);
+  }
+  keys.forEach(function(k){k.addEventListener('click',function(){tune(+k.dataset.ch);});});
+  document.addEventListener('keydown',function(e){
+    if(e.target&&e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight')tune(cur+1);
+    else if(e.key==='ArrowLeft')tune(cur-1);
+    else if(/^[0-8]$/.test(e.key))tune(+e.key);
+  });
+  var m=/^#ch-([0-8])$/.exec(location.hash);
+  show(m?+m[1]:0);
+  window.addEventListener('hashchange',function(){var h=/^#ch-([0-8])$/.exec(location.hash);if(h)tune(+h[1]);});
+
+  /* BGM: Tchaikovsky, Swan Lake Suite Op.20a, Scène (Sidney Beer, National Symphony Orchestra of London, Decca) */
+  var au=new Audio('swan.mp3');au.loop=true;au.preload='none';au.volume=0;
+  var btn=document.getElementById('snd'),lbl=document.getElementById('sndt'),fade=null,on=false;
+  function ramp(to,ms,done){
+    clearInterval(fade);var from=au.volume,steps=Math.max(1,ms/50),i=0;
+    fade=setInterval(function(){i++;au.volume=Math.max(0,Math.min(1,from+(to-from)*i/steps));if(i>=steps){clearInterval(fade);if(done)done();}},50);
+  }
+  btn.addEventListener('click',function(){
+    if(!on){
+      on=true;btn.setAttribute('aria-pressed','true');lbl.textContent='BGM 끄기';
+      var pr=au.play();
+      if(pr&&pr.catch)pr.catch(function(){on=false;btn.setAttribute('aria-pressed','false');lbl.textContent='재생할 수 없어요';});
+      ramp(.35,1500);
+    }else{
+      on=false;btn.setAttribute('aria-pressed','false');lbl.textContent='BGM 켜기';
+      ramp(0,700,function(){au.pause();});
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
