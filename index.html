@@ -371,7 +371,7 @@ ol.rules li::before{content:counter(r,decimal-leading-zero);background:none;widt
       on=true;btn.setAttribute('aria-pressed','true');lbl.textContent='BGM 끄기';
       var pr=au.play();
       if(pr&&pr.catch)pr.catch(function(){on=false;btn.setAttribute('aria-pressed','false');lbl.textContent='재생할 수 없어요';});
-      ramp(.35,1500);
+      ramp(.7,1500);
     }else{
       on=false;btn.setAttribute('aria-pressed','false');lbl.textContent='BGM 켜기';
       ramp(0,700,function(){au.pause();});
